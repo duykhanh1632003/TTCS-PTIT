@@ -20,18 +20,18 @@ export const columns: ColumnDef<OrderColumnType>[] = [
   },
   {
     accessorKey: "customer",
-    header: "Customer",
+    header: "Khách hàng",
   },
   {
     accessorKey: "products",
-    header: "Products",
+    header: "Sản phẩm",
   },
   {
     accessorKey: "totalAmount",
-    header: "Total ($)",
+    header: "Tổng tiền ($)",
   },
   {
     accessorKey: "createdAt",
-    header: "Created At",
+    header: "Ngày mua",
   },
 ];

@@ -26,7 +26,7 @@ import MultiSelect from "../custom ui/MultiSelect";
 import Loader from "../custom ui/Loader";
 
 const formSchema = z.object({
-  title: z.string().min(2).max(20),
+  title: z.string().min(2).max(50),
   description: z.string().min(2).max(500).trim(),
   media: z.array(z.string()),
   category: z.string(),
@@ -131,7 +131,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
           <Delete id={initialData._id} item="product" />
         </div>
       ) : (
-        <p className="text-heading2-bold">Create Product</p>
+        <p className="text-heading2-bold">Tạo sản phẩm mới</p>
       )}
       <Separator className="bg-grey-1 mt-4 mb-7" />
       <Form {...form}>
@@ -141,10 +141,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>Tiêu đề</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Title"
+                    placeholder="Tiêu đề"
                     {...field}
                     onKeyDown={handleKeyPress}
                   />
@@ -158,10 +158,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
+                <FormLabel>Mô tả</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Description"
+                    placeholder="Mô tả"
                     {...field}
                     rows={5}
                     onKeyDown={handleKeyPress}
@@ -176,7 +176,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             name="media"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image</FormLabel>
+                <FormLabel>Ảnh sản phẩm</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value}
@@ -199,11 +199,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price ($)</FormLabel>
+                  <FormLabel>Giá tiền ($)</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
-                      placeholder="Price"
+                      placeholder="Giá tiền"
                       {...field}
                       onKeyDown={handleKeyPress}
                     />
@@ -217,7 +217,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="expense"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Expense ($)</FormLabel>
+                  <FormLabel>Chi phí ($)</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -235,10 +235,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel>Loại</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Category"
+                      placeholder="Loại"
                       {...field}
                       onKeyDown={handleKeyPress}
                     />
@@ -275,10 +275,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 name="collections"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Collections</FormLabel>
+                    <FormLabel>Danh mục</FormLabel>
                     <FormControl>
                       <MultiSelect
-                        placeholder="Collections"
+                        placeholder="Danh mục"
                         collections={collections}
                         value={field.value}
                         onChange={(_id) =>
@@ -303,10 +303,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
               name="colors"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Colors</FormLabel>
+                  <FormLabel>Màu sắc</FormLabel>
                   <FormControl>
                     <MultiText
-                      placeholder="Colors"
+                      placeholder="Màu sắc"
                       value={field.value}
                       onChange={(color) =>
                         field.onChange([...field.value, color])
@@ -354,14 +354,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
 
           <div className="flex gap-10">
             <Button type="submit" className="bg-blue-1 text-white">
-              Submit
+              Xác nhận
             </Button>
             <Button
               type="button"
               onClick={() => router.push("/products")}
               className="bg-blue-1 text-white"
             >
-              Discard
+              Hủy sản phẩm
             </Button>
           </div>
         </form>

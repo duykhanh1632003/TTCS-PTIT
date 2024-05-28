@@ -7,32 +7,30 @@ import Link from "next/link";
 export const columns: ColumnDef<ProductType>[] = [
   {
     accessorKey: "title",
-    header: "Title",
+    header: "Tên sản phẩm",
     cell: ({ row }) => (
-      <Link
-        href={`/products/${row.original._id}`}
-        className="hover:text-red-1"
-      >
+      <Link href={`/products/${row.original._id}`} className="hover:text-red-1">
         {row.original.title}
       </Link>
     ),
   },
   {
     accessorKey: "category",
-    header: "Category",
+    header: "Loại",
   },
   {
     accessorKey: "collections",
-    header: "Collections",
-    cell: ({ row }) => row.original.collections.map((collection) => collection.title).join(", "),
+    header: "Danh mục",
+    cell: ({ row }) =>
+      row.original.collections.map((collection) => collection.title).join(", "),
   },
   {
     accessorKey: "price",
-    header: "Price ($)",
+    header: "Giá tiền ($)",
   },
   {
     accessorKey: "expense",
-    header: "Expense ($)",
+    header: "Phí thêm ($)",
   },
   {
     id: "actions",

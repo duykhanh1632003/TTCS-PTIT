@@ -1,5 +1,5 @@
-import { auth } from "@clerk/nextjs";
 import { NextRequest, NextResponse } from "next/server";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 import { connectToDB } from "@/lib/mongoDB";
 import Product from "@/lib/models/Product";
@@ -7,12 +7,6 @@ import Collection from "@/lib/models/Collection";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { userId } = auth();
-
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
     await connectToDB();
 
     const {
@@ -29,7 +23,7 @@ export const POST = async (req: NextRequest) => {
     } = await req.json();
 
     if (!title || !description || !media || !category || !price || !expense) {
-      return new NextResponse("Not enough data to create a product", {
+      return NextResponse.json("Not enough data to create a product", {
         status: 400,
       });
     }
@@ -82,4 +76,3 @@ export const GET = async (req: NextRequest) => {
 };
 
 export const dynamic = "force-dynamic";
-

@@ -17,13 +17,13 @@ export default async function Home() {
 
   return (
     <div className="px-8 py-10">
-      <p className="text-heading2-bold">Dashboard</p>
+      <p className="text-heading2-bold">Bảng doanh số</p>
       <Separator className="bg-grey-1 my-5" />
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
-        <Card>
-          <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle>Total Revenue</CardTitle>
+        <Card className="bg-blue-100 text-black">
+          <CardHeader className="flex flex-row justify-between items-center ">
+            <CardTitle>Tổng doanh thu</CardTitle>
             <CircleDollarSign className="max-sm:hidden" />
           </CardHeader>
           <CardContent>
@@ -31,9 +31,9 @@ export default async function Home() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle>Total Orders</CardTitle>
+        <Card className="bg-blue-100 text-black">
+          <CardHeader className="flex flex-row justify-between items-center bg-blue-100">
+            <CardTitle className="">Tổng số lượt đặt hàng</CardTitle>
             <ShoppingBag className="max-sm:hidden" />
           </CardHeader>
           <CardContent>
@@ -41,9 +41,9 @@ export default async function Home() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle>Total Customer</CardTitle>
+        <Card className="bg-blue-100 text-black">
+          <CardHeader className="flex flex-row justify-between items-center bg-blue-100">
+            <CardTitle>Tổng số khách hàng đặt mua</CardTitle>
             <UserRound className="max-sm:hidden" />
           </CardHeader>
           <CardContent>
@@ -52,9 +52,9 @@ export default async function Home() {
         </Card>
       </div>
 
-      <Card className="mt-10">
+      <Card className="mt-10 bg-blue-100">
         <CardHeader>
-          <CardTitle>Sales Chart ($)</CardTitle>
+          <CardTitle>Biểu đồ doanh số ($)</CardTitle>
         </CardHeader>
         <CardContent>
           <SalesChart data={graphData} />

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { stripe } from "@/lib/stripe";
+import Customer from "@/lib/models/Customer";
+import Order from "@/lib/models/Order";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -13,43 +14,47 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   try {
-    const { cartItems, customer } = await req.json();
+    const { formData, cartItems } = await req.json();
 
-    if (!cartItems || !customer) {
-      return new NextResponse("Not enough data to checkout", { status: 400 });
-    }
+    const products = cartItems.map((item) => ({
+      product: item.item._id,
+      color: item.color,
+      size: item.size,
+      quantity: item.quantity,
+    }));
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      shipping_address_collection: {
-        allowed_countries: ["US", "CA"],
-      },
-      shipping_options: [
-        { shipping_rate: "shr_1MfufhDgraNiyvtnDGef2uwK" },
-        { shipping_rate: "shr_1OpHFHDgraNiyvtnOY4vDjuY" },
-      ],
-      line_items: cartItems.map((cartItem: any) => ({
-        price_data: {
-          currency: "cad",
-          product_data: {
-            name: cartItem.item.title,
-            metadata: {
-              productId: cartItem.item._id,
-              ...(cartItem.size && { size: cartItem.size }),
-              ...(cartItem.color && { color: cartItem.color }),
-            },
-          },
-          unit_amount: cartItem.item.price * 100,
-        },
-        quantity: cartItem.quantity,
-      })),
-      client_reference_id: customer.clerkId,
-      success_url: `${process.env.ECOMMERCE_STORE_URL}/payment_success`,
-      cancel_url: `${process.env.ECOMMERCE_STORE_URL}/cart`,
+    const newOrder = new Order({
+      customerClerkId: formData.customerClerkId,
+      fullName: formData.fullName,
+      email: formData.email,
+      phoneNumber: formData.phoneNumber,
+      products: products,
+      shippingAddress: { country: formData.country, address: formData.address },
+      shippingMethod: formData.shippingMethod,
+      paymentMethod: formData.paymentMethod,
+      totalAmount: formData.finalTotal,
     });
 
-    return NextResponse.json(session, { headers: corsHeaders });
+    await newOrder.save(); // Assuming you have a save method on the Order model
+
+    let customer = await Customer.findOne({
+      clerkId: formData.customerClerkId,
+    });
+
+    if (customer) {
+      customer.orders.push(newOrder._id);
+    } else {
+      customer = new Customer({
+        clerkId: formData.customerClerkId,
+        email: formData.email,
+        name: formData.fullName,
+        orders: [newOrder._id],
+      });
+    }
+
+    await customer.save();
+
+    return new NextResponse("Order created", { status: 200 });
   } catch (err) {
     console.log("[checkout_POST]", err);
     return new NextResponse("Internal Server Error", { status: 500 });

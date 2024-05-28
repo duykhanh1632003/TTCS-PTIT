@@ -1,32 +1,50 @@
-import { DataTable } from "@/components/custom ui/DataTable"
-import { columns } from "@/components/orderItems/OrderItemsColums"
+import { DataTable } from "@/components/custom ui/DataTable";
+import { columns } from "@/components/orderItems/OrderItemsColums";
 
-const OrderDetails = async ({ params }: { params: { orderId: string }}) => {
-  const res = await fetch(`${process.env.ADMIN_DASHBOARD_URL}/api/orders/${params.orderId}`)
-  const { orderDetails, customer } = await res.json()
+const OrderDetails = async ({ params }: { params: { orderId: string } }) => {
+  const res = await fetch(
+    `${process.env.ADMIN_DASHBOARD_URL}/api/orders/${params.orderId}`
+  );
+  const { orderDetails, customer } = await res.json();
 
-  const { street, city, state, postalCode, country } = orderDetails.shippingAddress
-
+  const { address, city, state, postalCode, country } =
+    orderDetails.shippingAddress;
+  console.log("Check đâ", res.json());
   return (
     <div className="flex flex-col p-10 gap-5">
       <p className="text-base-bold">
-        Order ID: <span className="text-base-medium">{orderDetails._id}</span>
+        ID đơn hàng:{" "}
+        <span className="text-base-medium">{orderDetails._id}</span>
       </p>
       <p className="text-base-bold">
-        Customer name: <span className="text-base-medium">{customer.name}</span>
+        Tên khách hàng:{" "}
+        <span className="text-base-medium">{customer.name}</span>
       </p>
       <p className="text-base-bold">
-        Shipping address: <span className="text-base-medium">{street}, {city}, {state}, {postalCode}, {country}</span>
+        Địa chỉ nhận hàng:{" "}
+        <span className="text-base-medium">
+          {address}, {country}
+        </span>
       </p>
       <p className="text-base-bold">
-        Total Paid: <span className="text-base-medium">${orderDetails.totalAmount}</span>
+        Tổng tiền phải trả:{" "}
+        <span className="text-base-medium">${orderDetails.totalAmount}</span>
       </p>
       <p className="text-base-bold">
-        Shipping rate ID: <span className="text-base-medium">{orderDetails.shippingRate}</span>
+        Phương thức vận chuyển:{" "}
+        <span className="text-base-medium">{orderDetails.shippingMethod}</span>
       </p>
-      <DataTable columns={columns} data={orderDetails.products} searchKey="product"/>
+      <p className="text-base-bold">
+        Phương thức thanh toán:{" "}
+        <span className="text-base-medium">{orderDetails.paymentMethod}</span>
+      </p>
+      <DataTable
+        columns={columns}
+        data={orderDetails.products}
+        searchKey="product"
+      />
     </div>
-  )
-}
+  );
+};
 
-export default OrderDetails
+export default OrderDetails;

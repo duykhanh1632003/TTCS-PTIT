@@ -20,7 +20,7 @@ export const getTotalCustomers = async () => {
 export const getSalesPerMonth = async () => {
   await connectToDB()
   const orders = await Order.find()
-
+  
   const salesPerMonth = orders.reduce((acc, order) => {
     const monthIndex = new Date(order.createdAt).getMonth(); // 0 for Janruary --> 11 for December
     acc[monthIndex] = (acc[monthIndex] || 0) + order.totalAmount;

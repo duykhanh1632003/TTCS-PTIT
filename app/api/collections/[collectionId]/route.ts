@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
 
 import { connectToDB } from "@/lib/mongoDB";
 import Collection from "@/lib/models/Collection";
@@ -33,11 +32,7 @@ export const POST = async (
   { params }: { params: { collectionId: string } }
 ) => {
   try {
-    const { userId } = auth();
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
 
     await connectToDB();
 
@@ -73,11 +68,7 @@ export const DELETE = async (
   { params }: { params: { collectionId: string } }
 ) => {
   try {
-    const { userId } = auth();
 
-    if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
 
     await connectToDB();
 

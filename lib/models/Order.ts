@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
   customerClerkId: String,
+  fullName: String,
+  email: String,
+  phoneNumber: String,
   products: [
     {
       product: {
@@ -14,15 +17,16 @@ const orderSchema = new mongoose.Schema({
     },
   ],
   shippingAddress: {
-    street: String,
+    address: String,
     city: String,
     state: String,
     postalCode: String,
     country: String,
   },
-  shippingRate: String,
+  shippingMethod: String,
+  paymentMethod: String,
   totalAmount: Number,
-  createdAt: {
+createdAt: {
     type: Date,
     default: Date.now,
   },
