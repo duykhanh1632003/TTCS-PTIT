@@ -34,14 +34,14 @@ const useCart = create(
         }
 
         set({ cartItems: [...currentItems, { item, quantity, color, size }] });
-        toast.success("Item added to cart", { icon: "🛒" });
+        toast.success("Vật phẩm đã được thêm vào giỏ hàng", { icon: "🛒" });
       },
       removeItem: (idToRemove: String) => {
         const newCartItems = get().cartItems.filter(
           (cartItem) => cartItem.item._id !== idToRemove
         );
         set({ cartItems: newCartItems });
-        toast.success("Item removed from cart");
+        toast.success("Xóa vật phẩm từ giỏ hàng thành công");
       },
       increaseQuantity: (idToIncrease: String) => {
         const newCartItems = get().cartItems.map((cartItem) =>
@@ -50,7 +50,7 @@ const useCart = create(
             : cartItem
         );
         set({ cartItems: newCartItems });
-        toast.success("Item quantity increased");
+        toast.success("Tăng số lượng thành công");
       },
       decreaseQuantity: (idToDecrease: String) => {
         const newCartItems = get().cartItems.map((cartItem) =>
@@ -59,7 +59,7 @@ const useCart = create(
             : cartItem
         );
         set({ cartItems: newCartItems });
-        toast.success("Item quantity decreased");
+        toast.success("Giảm số lượng thành công");
       },
       clearCart: () => set({ cartItems: [] }),
     }),
@@ -71,4 +71,3 @@ const useCart = create(
 );
 
 export default useCart;
-

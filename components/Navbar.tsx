@@ -27,11 +27,9 @@ const Navbar = () => {
       <div className="flex gap-4 text-base-bold max-lg:hidden">
         <Link
           href="/"
-          className={`hover:text-red-1 ${
-            pathname === "/" && "text-red-1"
-          }`}
+          className={`hover:text-red-1 ${pathname === "/" && "text-red-1"}`}
         >
-          Home
+          Trang chủ
         </Link>
         <Link
           href={user ? "/wishlist" : "/sign-in"}
@@ -39,7 +37,7 @@ const Navbar = () => {
             pathname === "/wishlist" && "text-red-1"
           }`}
         >
-          Wishlist
+          Yêu thích
         </Link>
         <Link
           href={user ? "/orders" : "/sign-in"}
@@ -47,7 +45,7 @@ const Navbar = () => {
             pathname === "/orders" && "text-red-1"
           }`}
         >
-          Orders
+          Đơn hàng
         </Link>
       </div>
 
@@ -83,19 +81,19 @@ const Navbar = () => {
         {dropdownMenu && (
           <div className="absolute top-12 right-5 flex flex-col gap-4 p-3 rounded-lg border bg-white text-base-bold lg:hidden">
             <Link href="/" className="hover:text-red-1">
-              Home
+              Trang chủ
             </Link>
             <Link
               href={user ? "/wishlist" : "/sign-in"}
               className="hover:text-red-1"
             >
-              Wishlist
+              Yêu thích
             </Link>
             <Link
               href={user ? "/orders" : "/sign-in"}
               className="hover:text-red-1"
             >
-              Orders
+              Đơn hàng
             </Link>
             <Link
               href="/cart"
